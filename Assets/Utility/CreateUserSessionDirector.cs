@@ -20,6 +20,8 @@ public class CreateUserSessionDirector : MonoBehaviour {
         param.name     = name_field.text;
         param.password = password_field.text;
 
+        PlayerSession.name = param.name;
+
         ApiClient.Instance.ResponseCreateUserSession = ResponseCreateUserSession;
         ApiClient.Instance.RequestCreateUserSession(param);
     }
@@ -31,9 +33,7 @@ public class CreateUserSessionDirector : MonoBehaviour {
         PlayerSession.access_token    = response.access_token;
         PlayerSession.user_id         = response.user_id;
 
-        Debug.Log(PlayerSession.user_session_id);
-        Debug.Log(PlayerSession.access_token);
-        Debug.Log(PlayerSession.user_id);
+        Debug.Log("Login: " + PlayerSession.name);
 
         SceneManager.LoadScene("room_scene");
     }

@@ -7,21 +7,23 @@ using UnityEngine.SceneManagement;
 using HTTP;
 using Protocol;
 
-public class DeleteUserSessionDirector : MonoBehaviour {
+public class PlayerLeavingDirector : MonoBehaviour {
 
-	public void DeleteUserSession() {
+    public void PlayerLeaving()
+    {
         ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
         ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
 
-        RequestDeleteUserSession param = new RequestDeleteUserSession();
+        RequestDeletePlayer param = new RequestDeletePlayer();
 
         param.user_session_id = PlayerSession.user_session_id;
 
         ApiClient.Instance.ResponseDeleteUserSession = ResponseDeleteUserSession;
         ApiClient.Instance.RequestDeleteUserSession(param);
     }
-	
-	public void ResponseDeleteUserSession(ResponseDeleteUserSession response) {
+
+    public void ResponseDeleteUserSession(ResponseDeleteUserSession response)
+    {
         PlayerSession.user_session_id = 0;
         PlayerSession.access_token = "";
         PlayerSession.user_id = 0;
