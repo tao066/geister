@@ -22,12 +22,7 @@ public class DeleteUserSessionDirector : MonoBehaviour {
     }
 	
 	public void ResponseDeleteUserSession(ResponseDeleteUserSession response) {
-        PlayerSession.user_session_id = 0;
-        PlayerSession.access_token = "";
-        PlayerSession.user_id = 0;
-
         Debug.Log("Logout: " + response.name);
-
         SceneManager.LoadScene("title_scene");
     }
 }

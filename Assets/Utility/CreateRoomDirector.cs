@@ -7,9 +7,10 @@ using HTTP;
 using Protocol;
 
 
-public class CreateRoomDirector : MonoBehaviour {
+public class CreateRoomDirector : MonoBehaviour
+{
 
-	public void CreateRoom()
+    public void CreateRoom()
     {
         ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
         ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
@@ -22,9 +23,11 @@ public class CreateRoomDirector : MonoBehaviour {
 
     public void ResponseCreateRoom(ResponseCreateRoom response)
     {
-        Debug.Log("create: room_id[" + response.room_id + "]");
+        PlayerSession.player_entry_id = response.player_entry_id;
 
-        Debug.Log("Player \"" + PlayerSession.name + "\" Entry to number \"" + response.room_id + "\"");
+        Debug.Log("create: room_id[" + response.room_id + "]");
+        Debug.Log("Player \"" + PlayerSession.name + "\" Create and Entry to room number \"" + response.room_id + "\"");
+
         SceneManager.LoadScene("battle_scene");
     }
 }

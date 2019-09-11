@@ -43,7 +43,9 @@ public class RoomListController : MonoBehaviour {
 
     public void ResponseCreatePlayerEntry(ResponseCreatePlayerEntry response)
     {
-        Debug.Log("Player \"" + PlayerSession.name + "\" Entry to number \"" + response.room_id + "\"");
+        PlayerSession.player_entry_id = response.player_entry_id;
+
+        Debug.Log("Player \"" + PlayerSession.name + "\" Entry to room number \"" + response.room_id + "\"");
         SceneManager.LoadScene("battle_scene");
     }
 }

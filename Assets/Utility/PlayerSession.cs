@@ -4,4 +4,6 @@
     public static int user_session_id;
     public static string access_token;
     public static int user_id;
+
+    public static int player_entry_id;
 }

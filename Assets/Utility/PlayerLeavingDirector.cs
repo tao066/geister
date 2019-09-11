@@ -14,22 +14,17 @@ public class PlayerLeavingDirector : MonoBehaviour {
         ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
         ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
 
-        RequestDeletePlayer param = new RequestDeletePlayer();
+        RequestDeletePlayerEntry param = new RequestDeletePlayerEntry();
 
-        param.user_session_id = PlayerSession.user_session_id;
+        param.player_entry_id = PlayerSession.player_entry_id;
 
-        ApiClient.Instance.ResponseDeleteUserSession = ResponseDeleteUserSession;
-        ApiClient.Instance.RequestDeleteUserSession(param);
+        ApiClient.Instance.ResponseDeletePlayerEntry = ResponseDeletePlayerEntry;
+        ApiClient.Instance.RequestDeletePlayerEntry(param);
     }
 
-    public void ResponseDeleteUserSession(ResponseDeleteUserSession response)
+    public void ResponseDeletePlayerEntry(ResponseDeletePlayerEntry response)
     {
-        PlayerSession.user_session_id = 0;
-        PlayerSession.access_token = "";
-        PlayerSession.user_id = 0;
-
-        Debug.Log("Logout: " + response.name);
-
-        SceneManager.LoadScene("title_scene");
+        Debug.Log("Player \"" + PlayerSession.name + "\" Leaving to room number \"" + response.room_id + "\"");
+        SceneManager.LoadScene("room_scene");
     }
 }
