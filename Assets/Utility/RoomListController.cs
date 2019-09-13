@@ -30,9 +30,6 @@ public class RoomListController : MonoBehaviour {
 
     public void PlayerEntry()
     {
-        ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
-        ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
-
         RequestCreatePlayerEntry param = new RequestCreatePlayerEntry();
 
         param.room_id = this.room_id;
@@ -43,7 +40,9 @@ public class RoomListController : MonoBehaviour {
 
     public void ResponseCreatePlayerEntry(ResponseCreatePlayerEntry response)
     {
+        PlayerSession.room_id = response.room_id;
         PlayerSession.player_entry_id = response.player_entry_id;
+        PlayerSession.is_owner = false;
 
         Debug.Log("Player \"" + PlayerSession.name + "\" Entry to room number \"" + response.room_id + "\"");
         SceneManager.LoadScene("battle_scene");

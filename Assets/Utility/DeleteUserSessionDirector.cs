@@ -10,9 +10,6 @@ using Protocol;
 public class DeleteUserSessionDirector : MonoBehaviour {
 
 	public void DeleteUserSession() {
-        ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
-        ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
-
         RequestDeleteUserSession param = new RequestDeleteUserSession();
 
         param.user_session_id = PlayerSession.user_session_id;

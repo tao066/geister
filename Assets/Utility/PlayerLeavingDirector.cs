@@ -11,9 +11,6 @@ public class PlayerLeavingDirector : MonoBehaviour {
 
     public void PlayerLeaving()
     {
-        ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
-        ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
-
         RequestDeletePlayerEntry param = new RequestDeletePlayerEntry();
 
         param.player_entry_id = PlayerSession.player_entry_id;

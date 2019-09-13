@@ -10,10 +10,12 @@ using Protocol;
 public class NewCreateUserDirector : MonoBehaviour {
     public InputField name_field;
     public InputField password_field;
+    public InputField ip;
 
     public void CreateNewUser()
     {
-        ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
+        ApiClient.Instance.SetIpAddress(this.ip.text);
+        PlayerSession.ip = this.ip.text;
 
         RequestCreateUser param = new RequestCreateUser();
 

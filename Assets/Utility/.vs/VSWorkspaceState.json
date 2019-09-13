@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\geister"
+    "\\geister",
+    "\\HTTP"
   ],
-  "SelectedNode": "\\geister\\CoinPanelController.cs",
+  "SelectedNode": "\\RoomListGenerator.cs",
   "PreviewInSolutionExplorer": false
 }

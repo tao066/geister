@@ -13,9 +13,6 @@ public class RoomListGenerator : MonoBehaviour {
 
     public void InstantiateRoomList()
     {
-        ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
-        ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
-
         RequestListRooms param = new RequestListRooms();
 
         ApiClient.Instance.ResponseListRooms = ResponseListRooms;

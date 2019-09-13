@@ -12,9 +12,6 @@ public class CreateRoomDirector : MonoBehaviour
 
     public void CreateRoom()
     {
-        ApiClient.Instance.SetIpAddress("http://127.0.0.1:3000");
-        ApiClient.Instance.SetAccessToken(PlayerSession.access_token);
-
         RequestCreateRoom param = new RequestCreateRoom();
 
         ApiClient.Instance.ResponseCreateRoom = ResponseCreateRoom;
@@ -23,7 +20,9 @@ public class CreateRoomDirector : MonoBehaviour
 
     public void ResponseCreateRoom(ResponseCreateRoom response)
     {
+        PlayerSession.room_id = response.room_id;
         PlayerSession.player_entry_id = response.player_entry_id;
+        PlayerSession.is_owner = true;
 
         Debug.Log("create: room_id[" + response.room_id + "]");
         Debug.Log("Player \"" + PlayerSession.name + "\" Create and Entry to room number \"" + response.room_id + "\"");

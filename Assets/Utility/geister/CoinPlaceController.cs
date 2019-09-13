@@ -7,6 +7,9 @@ public class CoinPlaceController : MonoBehaviour
 
     public int panel_id, width_id, height_id, coin_id;
 
+    public bool is_myplayer_piece;
+    public int piece_id = 0;
+
     public GameObject coin_evil_prefab, coin_good_prefab, coin_ura_prefab;
 
     public void SetPlaceId(int p, int w, int h)
@@ -67,6 +70,36 @@ public class CoinPlaceController : MonoBehaviour
     public void OnMouseDown()
     {
         GameObject go = GameObject.Find("geister_director");
-        go.gameObject.GetComponent<GeisterDirector>().SetStartCoinPlace( gameObject );
+        go.gameObject.GetComponent<GeisterDirector>().SetCoinPlace( gameObject );
+    }
+
+    /// <summary>
+    /// 駒の状態を返す
+    /// </summary>
+    /// <returns></returns>
+    public string Kind()
+    {
+        switch (coin_id)
+        {
+            case 0: return "";
+            case 1: return "evil";
+            case 2: return "good";
+            case 3: return "unknown";
+        }
+
+        return "";
+    }
+
+    public int CoinId(string kind)
+    {
+        switch (kind)
+        {
+            case "":        return 0;
+            case "evil":    return 1;
+            case "good":    return 2;
+            case "unknown": return 3;
+        }
+
+        return 0;
     }
 }

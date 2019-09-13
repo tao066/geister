@@ -6,13 +6,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using Protocol;
 
-public class BoardPanelController : MonoBehaviour {
+public class BoardPanelController2 : MonoBehaviour
+{
 
     public GameObject coin_place_prefab;
 
     public void CreateCoinPlace(int panel_id)
     {
-        int width  = 8;
+        int width = 8;
         int height = 6;
 
         for (int j = 1; j <= height; j++)
@@ -31,7 +32,6 @@ public class BoardPanelController : MonoBehaviour {
 
     public void UpdateCoinPanel(List<PieceInfo> pieces, bool is_first)
     {
-
         if (transform.childCount > 0)
         {
             foreach (Transform child in transform)
@@ -49,15 +49,16 @@ public class BoardPanelController : MonoBehaviour {
         {
             if (piece.captured) continue;
 
-            int width  = piece.point_x + 1;
+            int width = piece.point_x + 1;
             int height = piece.point_y;
 
             if (!is_first)
             {
-                width  = 9 - width;
+                width = 9 - width;
                 height = 7 - height;
             }
 
+            Debug.Log("coin_place_clone_" + height + "" + width);
             GameObject go = transform.Find("coin_place_clone_" + height + "" + width).gameObject;
 
             CoinPlaceController init_coin = go.GetComponent<CoinPlaceController>();
@@ -106,13 +107,13 @@ public class BoardPanelController : MonoBehaviour {
         {
             CoinPlaceController CoinPlaceController = CoinPlace.gameObject.GetComponent<CoinPlaceController>();
 
-            string width_str  = "" + CoinPlaceController.width_id  + "";
+            string width_str = "" + CoinPlaceController.width_id + "";
             string height_str = "" + CoinPlaceController.height_id + "";
 
             if (Regex.IsMatch(width_str, "[3456]") && Regex.IsMatch(height_str, "[12]"))
             {
                 if (CoinPlaceController.coin_id == 0)
-                    CoinPlace.gameObject.GetComponent<Image>().color = new Color(0f, 1f, 0f, 100f/255f);
+                    CoinPlace.gameObject.GetComponent<Image>().color = new Color(0f, 1f, 0f, 100f / 255f);
             }
         }
     }
@@ -137,11 +138,6 @@ public class BoardPanelController : MonoBehaviour {
             }
         }
 
-        return true;
-    }
-
-    public bool Result()
-    {
         return true;
     }
 }

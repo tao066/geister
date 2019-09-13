@@ -9,19 +9,13 @@ using UnityEngine.UI;
 using HTTP;
 using Protocol;
 
-public class GeisterDirector : MonoBehaviour
+public class GeisterController2 : MonoBehaviour
 {
     // -----------------------------------------------------------------
     // パネルオブジェクトを入れる変数 
     public GameObject BoardPanelObject;
     public GameObject MyselfPanelObject;
     public GameObject OpponentPanelObject;
-
-    public GameObject Win;
-    public GameObject Lose;
-    public GameObject Status;
-
-    private GameObject status;
 
     // パネルコントローラを入れる変数
     private BoardPanelController BoardPanelController;
@@ -42,8 +36,6 @@ public class GeisterDirector : MonoBehaviour
     // 「始点かどうか」のデータを入れる変数
     private bool is_start_set = false;
 
-    private bool is_finished = false;
-
     // マッチング中か
     private bool is_matching = true;
 
@@ -51,7 +43,7 @@ public class GeisterDirector : MonoBehaviour
 
     private bool is_first = true;
 
-    private string game_status = "";
+    private string game_status = "exited";
 
     private bool game_started = false;
 
@@ -94,7 +86,6 @@ public class GeisterDirector : MonoBehaviour
                 game_started = true;
                 RoadPieces();
             }
-
             delta = 0;
         }
     }
@@ -121,8 +112,7 @@ public class GeisterDirector : MonoBehaviour
 
             is_start_set = true;
 
-            if (!game_started)
-                BoardPanelController.HoverInitialiseSetPlace();
+            BoardPanelController.HoverInitialiseSetPlace();
         }
         else
         {
@@ -147,27 +137,8 @@ public class GeisterDirector : MonoBehaviour
 
                 case "playing":
                     // 自分自身のターンの場合の動作処理
-                    if (CheckIsMyselfTurn())
-                    {
-                        status = Instantiate(Status, Status.transform);
-                    }
-                    break;
+                    if (CheckIsMyselfTurn()) return;
 
-                case "finished":
-                    if (!is_finished)
-                    {
-                        if (BoardPanelController.Result())
-                        {
-                            status = Instantiate(Win, Status.transform);
-                        }
-                        else
-                        {
-                            status = Instantiate(Lose, Status.transform);
-                        }
-                        is_finished = true;
-                    }
-                    break;
-                case "exited":
                     break;
             }
         }
@@ -210,8 +181,6 @@ public class GeisterDirector : MonoBehaviour
     // 自分自身のターンの場合の条件処理
     bool CheckIsMyselfTurn()
     {
-        if (!is_myself_turn) return false;
-
         if (StartCoinPlaceController.panel_id == 1 && EndCoinPlaceController.panel_id == 1)
         {
             if (!StartCoinPlaceController.is_myplayer_piece) return false;
@@ -255,7 +224,6 @@ public class GeisterDirector : MonoBehaviour
     // room info syutoku
     void LoadRoomInfo()
     {
-
         RequestShowRoom param = new RequestShowRoom();
 
         param.room_id = PlayerSession.room_id;
@@ -303,7 +271,6 @@ public class GeisterDirector : MonoBehaviour
     /// </summary>
     void SendPrepareGame()
     {
-
         RequestPrepareGame param = new RequestPrepareGame();
 
         param.game_id = PlayerSession.game_id;
@@ -370,8 +337,6 @@ public class GeisterDirector : MonoBehaviour
     public void ResponseListPieces(ResponseListPieces response)
     {
         BoardPanelController.UpdateCoinPanel(response.pieces, is_first);
-        MyselfPanelController.UpdateCoinPanel(response.pieces, false);
-        OpponentPanelController.UpdateCoinPanel(response.pieces, true);
     }
 
     void SendMovePiece()
@@ -379,19 +344,12 @@ public class GeisterDirector : MonoBehaviour
         RequestUpdatePiece param = new RequestUpdatePiece();
 
         param.piece_id = EndCoinPlaceController.piece_id;
-        param.point_x = EndCoinPlaceController.width_id;
+        param.point_x = EndCoinPlaceController.width_id - 1;
         param.point_y = EndCoinPlaceController.height_id;
 
-        if (!is_first)
-        {
-            param.point_x = 9 - param.point_x;
-            param.point_y = 7 - param.point_y;
-        }
 
-        param.point_x -= 1;
 
         ApiClient.Instance.ResponseUpdatePiece = ResponseUpdatePiece;
-        Debug.Log("x: " + param.point_x + ", y: " + param.point_y);
         ApiClient.Instance.RequestUpdatePiece(param);
     }
 
